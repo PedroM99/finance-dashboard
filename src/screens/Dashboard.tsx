@@ -6,35 +6,81 @@ export default function Dashboard () {
                     <p className="text-sm font-medium tracking-wide text-zinc-500">
                         MyFinance
                     </p>
-                    <h1 className="mt-2 text-3xl font-semibold">Dashboard</h1>
                 </header>
 
                 <section className="grid grid-cols-12 gap-5">
-                    <div className="col-span-9">
-                        <div className="grid grid-cols-2 gap-5">
+                    <div className="col-span-9 space-y-5">
+
+                        <div className="grid grid-cols-3 gap-5">
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
                             <p className="text-sm font-medium text-zinc-500">Current Balance</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€10,000.57</h2>
-                            <p className="mt-2 text-sm text-emerald-600">+2.4% this month</p>
+                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€10,304.57</h2>
                             </article>
 
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-500">Latest Expenses</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€1,284.90</h2>
-                            <p className="mt-2 text-sm text-emerald-600">12 transactions</p>
+                            <p className="text-sm font-medium text-zinc-500">Monthly Savings</p>
+                            <h2 className="mt-4 text-3xl font-semibold text-emerald-600">+€450</h2>
+                            <p className="mt-1 text-sm text-emerald-400">+29%</p>
                             </article>
+
+                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
+                            <p className="text-sm font-medium text-zinc-500">Portfolio Value</p>
+                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€3,147</h2>
+                            </article>
+
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-5">
 
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer"> 
                             <p className="text-sm font-medium text-zinc-500">Latest Income</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€2,950.00</h2>
-                            <p className="mt-2 text-sm text-emerald-600">Salary + freelance</p>
+                            <h2 className="mt-4 text-3xl font-semibold text-emerald-600">+€2,950.00</h2>
+                            <p className="mt-2 text-sm text-zinc-800">Salary + freelance</p>
                             </article>
 
-                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-500">Top Gainer</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">NVDA</h2>
-                            <p className="mt-2 text-sm text-emerald-600">+5.82% in 24h</p>
+                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer"> 
+                            <p className="text-sm font-medium text-zinc-500">Latest Expense</p>
+                            <h2 className="mt-4 text-3xl font-semibold text-red-600">-€28.20</h2>
+                            <p className="mt-2 text-sm text-zinc-800">Uber Eats</p>
                             </article>
+
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5">
+
+                            <article className="cursor-pointer rounded-3xl bg-white p-6 shadow-sm transition hover:-translate-y-0.5">
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm font-medium text-zinc-500">Market Movers</p>
+                                <p className="text-xs text-zinc-400">24h</p>
+                            </div>
+
+                            <div className="mt-6 grid grid-cols-2 gap-8">
+                                <div className="flex items-center  gap-2">
+                                <div className="min-w-35">
+                                    <p className="text-sm font-medium text-zinc-500">Top Gainer</p>
+                                    <h3 className="mt-3 text-3xl font-semibold text-zinc-800">BTC</h3>
+                                    <p className="mt-1 text-lg font-medium text-emerald-600">+18.00%</p>
+                                </div>
+
+                                <div className="flex h-24 w-full max-w-70 items-center justify-center rounded-2xl border border-dashed border-zinc-300">
+                                    <span className="text-sm text-zinc-400">Chart placeholder</span>
+                                </div>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                <div className="min-w-35">
+                                    <p className="text-sm font-medium text-zinc-500">Top Loser</p>
+                                    <h3 className="mt-3 text-3xl font-semibold text-zinc-800">SOL</h3>
+                                    <p className="mt-1 text-lg font-medium text-red-600">-8.14%</p>
+                                </div>
+
+                                <div className="flex h-24 w-full max-w-70 items-center justify-center rounded-2xl border border-dashed border-zinc-300">
+                                    <span className="text-sm text-zinc-400">Chart placeholder</span>
+                                </div>
+                                </div>
+                            </div>
+                            </article>
+
                         </div>
                     </div>
 
