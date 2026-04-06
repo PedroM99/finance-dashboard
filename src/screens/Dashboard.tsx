@@ -1,4 +1,24 @@
+import { useState } from "react";
+
+
+
 export default function Dashboard () {
+
+
+    const [openActions, setOpenActions] = useState({
+        income: false,
+        expense: false,
+        goal: false,
+        });
+
+        const toggleAction = (action: "income" | "expense" | "goal") => {
+        setOpenActions((prev) => ({
+            ...prev,
+            [action]: !prev[action],
+        }));
+        };
+
+
     return(
         <main className="min-h-screen bg-[#f7f3eb] text-zinc-800">
             <div className="mx-auto flex min-h-screen w-full max-w-[80vw] flex-col px-6 py-8">
@@ -18,7 +38,7 @@ export default function Dashboard () {
                             </article>
 
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-500">Monthly Savings</p>
+                            <p className="text-sm font-medium text-zinc-500">Savings After Goals</p>
                             <h2 className="mt-4 text-3xl font-semibold text-emerald-600">+€450</h2>
                             <p className="mt-1 text-sm text-emerald-400">+29%</p>
                             </article>
@@ -26,6 +46,7 @@ export default function Dashboard () {
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
                             <p className="text-sm font-medium text-zinc-500">Portfolio Value</p>
                             <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€3,147</h2>
+                            <p className="mt-1 text-sm text-emerald-400">+7%</p>
                             </article>
 
                         </div>
@@ -81,17 +102,121 @@ export default function Dashboard () {
                             </div>
                             </article>
 
+
+                            <article className="cursor-pointer rounded-3xl bg-white p-6 shadow-sm transition">
+                            <p className="text-sm font-medium text-zinc-500">Savings Goals</p>
+
+                            <div className="mt-2 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+                                <button className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-zinc-200 text-lg text-zinc-500 transition hover:border-zinc-300 hover:bg-zinc-50">
+                                ←
+                                </button>
+
+                                <div>
+                                <h3 className="text-center text-2xl font-semibold text-zinc-800">
+                                    Emergency Fund
+                                </h3>
+
+                                <div className="mt-5 mx-auto grid max-w-4xl grid-cols-2 gap-0 overflow-hidden rounded-2xl border border-zinc-200">
+                                    <div className="flex flex-col items-center justify-center px-6 py-6 text-center">
+                                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-400">
+                                        Saved This Month
+                                    </p>
+                                    <p className="mt-3 text-4xl font-semibold text-emerald-600">+€770</p>
+                                    </div>
+
+                                    <div className="flex flex-col items-center justify-center border-zinc-200 px-6 py-6 text-center">
+                                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-400">
+                                        Target
+                                    </p>
+                                    <p className="mt-3 text-4xl font-semibold text-zinc-800">€3,200 / €5,000</p>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <button className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-zinc-200 text-lg text-zinc-500 transition hover:border-zinc-300 hover:bg-zinc-50">
+                                →
+                                </button>
+                            </div>
+                            <div className="mt-6 flex items-center justify-center gap-2">
+                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-800"></span>
+                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-300"></span>
+                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-300"></span>
+                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-300"></span>
+                            </div>
+                            </article>
+
                         </div>
                     </div>
 
                     <aside className="col-span-3 flex flex-col gap-4">
-                        <button className="rounded-2xl bg-white px-4 py-4 text-left shadow-sm transition hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-800">Add Income</p>
+                    <article className="overflow-hidden rounded-2xl bg-white shadow-sm transition">
+                        <button
+                        onClick={() => toggleAction("income")}
+                        className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left"
+                        >
+                        <p className="text-sm font-medium text-zinc-800">Add Income</p>
                         </button>
 
-                        <button className="rounded-2xl bg-white px-4 py-4 text-left shadow-sm transition hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-800">Add Expense</p>
+                        <div
+                        className={`grid transition-all duration-300 ease-in-out ${
+                            openActions.income ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
+                        >
+                        <div className="overflow-hidden">
+                            <div className="border-t border-zinc-100 px-4 py-4">
+                            <p className="text-sm text-zinc-500">
+                                Expanded income form content will go here.
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                    </article>
+
+                    <article className="overflow-hidden rounded-2xl bg-white shadow-sm transition">
+                        <button
+                        onClick={() => toggleAction("expense")}
+                        className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left"
+                        >
+                        <p className="text-sm font-medium text-zinc-800">Add Expense</p>
                         </button>
+
+                        <div
+                        className={`grid transition-all duration-300 ease-in-out ${
+                            openActions.expense ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
+                        >
+                        <div className="overflow-hidden">
+                            <div className="border-t border-zinc-100 px-4 py-4">
+                            <p className="text-sm text-zinc-500">
+                                Expanded expense form content will go here.
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                    </article>
+
+                    <article className="overflow-hidden rounded-2xl bg-white shadow-sm transition">
+                        <button
+                        onClick={() => toggleAction("goal")}
+                        className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left"
+                        >
+                        <p className="text-sm font-medium text-zinc-800">Add New Goal</p>
+                        </button>
+
+                        <div
+                        className={`grid transition-all duration-300 ease-in-out ${
+                            openActions.goal ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
+                        >
+                        <div className="overflow-hidden">
+                            <div className="border-t border-zinc-100 px-4 py-4">
+                            <p className="text-sm text-zinc-500">
+                                Expanded goal form content will go here.
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                    </article>
                     </aside>
                 </section>
             </div>
