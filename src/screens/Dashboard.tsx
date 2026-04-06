@@ -1,4 +1,5 @@
 import { useState } from "react";
+import QuickActionCard from "../components/QuickActionCard";
 
 
 
@@ -149,74 +150,35 @@ export default function Dashboard () {
                     </div>
 
                     <aside className="col-span-3 flex flex-col gap-4">
-                    <article className="overflow-hidden rounded-2xl bg-white shadow-sm transition">
-                        <button
-                        onClick={() => toggleAction("income")}
-                        className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left"
+                        <QuickActionCard
+                            title="Add Income"
+                            isOpen={openActions.income}
+                            onToggle={() => toggleAction("income")}
                         >
-                        <p className="text-sm font-medium text-zinc-800">Add Income</p>
-                        </button>
-
-                        <div
-                        className={`grid transition-all duration-300 ease-in-out ${
-                            openActions.income ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                        }`}
-                        >
-                        <div className="overflow-hidden">
-                            <div className="border-t border-zinc-100 px-4 py-4">
                             <p className="text-sm text-zinc-500">
-                                Expanded income form content will go here.
+                            Expanded income form content will go here.
                             </p>
-                            </div>
-                        </div>
-                        </div>
-                    </article>
+                        </QuickActionCard>
 
-                    <article className="overflow-hidden rounded-2xl bg-white shadow-sm transition">
-                        <button
-                        onClick={() => toggleAction("expense")}
-                        className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left"
+                    <QuickActionCard
+                            title="Add Expense"
+                            isOpen={openActions.expense}
+                            onToggle={() => toggleAction("expense")}
                         >
-                        <p className="text-sm font-medium text-zinc-800">Add Expense</p>
-                        </button>
-
-                        <div
-                        className={`grid transition-all duration-300 ease-in-out ${
-                            openActions.expense ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                        }`}
-                        >
-                        <div className="overflow-hidden">
-                            <div className="border-t border-zinc-100 px-4 py-4">
                             <p className="text-sm text-zinc-500">
-                                Expanded expense form content will go here.
+                            Expanded expense form content will go here.
                             </p>
-                            </div>
-                        </div>
-                        </div>
-                    </article>
+                        </QuickActionCard>
 
-                    <article className="overflow-hidden rounded-2xl bg-white shadow-sm transition">
-                        <button
-                        onClick={() => toggleAction("goal")}
-                        className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left"
+                    <QuickActionCard
+                            title="Add Goal"
+                            isOpen={openActions.goal}
+                            onToggle={() => toggleAction("goal")}
                         >
-                        <p className="text-sm font-medium text-zinc-800">Add New Goal</p>
-                        </button>
-
-                        <div
-                        className={`grid transition-all duration-300 ease-in-out ${
-                            openActions.goal ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                        }`}
-                        >
-                        <div className="overflow-hidden">
-                            <div className="border-t border-zinc-100 px-4 py-4">
                             <p className="text-sm text-zinc-500">
-                                Expanded goal form content will go here.
+                            Expanded goal form content will go here.
                             </p>
-                            </div>
-                        </div>
-                        </div>
-                    </article>
+                        </QuickActionCard>
                     </aside>
                 </section>
             </div>
