@@ -1,5 +1,6 @@
 import { useState } from "react";
 import QuickActionCard from "../components/QuickActionCard";
+import SavingsGoalsCard from "../components/SavingsGoalsCard";
 
 
 
@@ -24,7 +25,7 @@ export default function Dashboard () {
         <main className="min-h-screen bg-[#f7f3eb] text-zinc-800">
             <div className="mx-auto flex min-h-screen w-full max-w-[80vw] flex-col px-6 py-8">
                 <header className="mb-8">
-                    <p className="text-sm font-medium tracking-wide text-zinc-500">
+                    <p className="text-sm font-medium tracking-wide text-[#76638F]">
                         MyFinance
                     </p>
                 </header>
@@ -32,38 +33,45 @@ export default function Dashboard () {
                 <section className="grid grid-cols-12 gap-5">
                     <div className="col-span-9 space-y-5">
 
-                        <div className="grid grid-cols-3 gap-5">
-                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-500">Current Balance</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€10,304.57</h2>
-                            </article>
+                        <div className="rounded-4xl border border-[#ebe4f3] bg-[#fcfaf6] px-7 py-6 shadow-[0_1px_2px_rgba(24,24,27,0.03)]">
+                        <div className="grid grid-cols-[1.4fr_auto_0.9fr] items-center gap-6">
+                            <div>
+                            <p className="text-sm font-medium text-[#76638F]">Current Balance</p>
+                            <h2 className="mt-4 text-5xl font-semibold tracking-[-0.04em] text-zinc-800">
+                                €10,304.57
+                            </h2>
+                            </div>
 
-                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-500">Savings After Goals</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-emerald-600">+€450</h2>
-                            <p className="mt-1 text-sm text-emerald-400">+29%</p>
-                            </article>
+                            <div className="h-full w-px self-stretch bg-[#ebe4f3]" />
 
-                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
-                            <p className="text-sm font-medium text-zinc-500">Portfolio Value</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€3,147</h2>
-                            <p className="mt-1 text-sm text-emerald-400">+7%</p>
-                            </article>
-
+                            <div>
+                            <p className="text-sm font-medium text-[#76638F]">Savings After Goals</p>
+                            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] text-emerald-600">
+                                +€450
+                            </h2>
+                            <p className="mt-2 text-sm font-medium text-emerald-500">+29% this month</p>
+                            </div>
+                        </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-5">
+                        <div className="grid grid-cols-3 gap-5">
 
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer"> 
-                            <p className="text-sm font-medium text-zinc-500">Latest Income</p>
+                            <p className="text-sm font-medium text-[#76638F]">Latest Income</p>
                             <h2 className="mt-4 text-3xl font-semibold text-emerald-600">+€2,950.00</h2>
                             <p className="mt-2 text-sm text-zinc-800">Salary + freelance</p>
                             </article>
 
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer"> 
-                            <p className="text-sm font-medium text-zinc-500">Latest Expense</p>
+                            <p className="text-sm font-medium text-[#76638F]">Latest Expense</p>
                             <h2 className="mt-4 text-3xl font-semibold text-red-600">-€28.20</h2>
                             <p className="mt-2 text-sm text-zinc-800">Uber Eats</p>
+                            </article>
+
+                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
+                            <p className="text-sm font-medium text-[#76638F]">Portfolio Value</p>
+                            <h2 className="mt-4 text-3xl font-semibold text-zinc-800">€3,147</h2>
+                            <p className="mt-1 text-sm text-emerald-400">+7%</p>
                             </article>
 
                         </div>
@@ -72,14 +80,14 @@ export default function Dashboard () {
 
                             <article className="cursor-pointer rounded-3xl bg-white p-6 shadow-sm transition hover:-translate-y-0.5">
                             <div className="flex items-center justify-between">
-                                <p className="text-sm font-medium text-zinc-500">Market Movers</p>
+                                <p className="text-sm font-medium text-[#76638F]">Market Movers</p>
                                 <p className="text-xs text-zinc-400">24h</p>
                             </div>
 
                             <div className="mt-6 grid grid-cols-2 gap-8">
                                 <div className="flex items-center  gap-2">
                                 <div className="min-w-35">
-                                    <p className="text-sm font-medium text-zinc-500">Top Gainer</p>
+                                    <p className="text-sm font-medium text-[#76638F]">Top Gainer</p>
                                     <h3 className="mt-3 text-3xl font-semibold text-zinc-800">BTC</h3>
                                     <p className="mt-1 text-lg font-medium text-emerald-600">+18.00%</p>
                                 </div>
@@ -91,7 +99,7 @@ export default function Dashboard () {
 
                                 <div className="flex items-center gap-2">
                                 <div className="min-w-35">
-                                    <p className="text-sm font-medium text-zinc-500">Top Loser</p>
+                                    <p className="text-sm font-medium text-[#76638F]">Top Loser</p>
                                     <h3 className="mt-3 text-3xl font-semibold text-zinc-800">SOL</h3>
                                     <p className="mt-1 text-lg font-medium text-red-600">-8.14%</p>
                                 </div>
@@ -103,48 +111,8 @@ export default function Dashboard () {
                             </div>
                             </article>
 
-
-                            <article className="cursor-pointer rounded-3xl bg-white p-6 shadow-sm transition">
-                            <p className="text-sm font-medium text-zinc-500">Savings Goals</p>
-
-                            <div className="mt-2 grid grid-cols-[auto_1fr_auto] items-center gap-4">
-                                <button className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-zinc-200 text-lg text-zinc-500 transition hover:border-zinc-300 hover:bg-zinc-50">
-                                ←
-                                </button>
-
-                                <div>
-                                <h3 className="text-center text-2xl font-semibold text-zinc-800">
-                                    Emergency Fund
-                                </h3>
-
-                                <div className="mt-5 mx-auto grid max-w-4xl grid-cols-2 gap-0 overflow-hidden rounded-2xl border border-zinc-200">
-                                    <div className="flex flex-col items-center justify-center px-6 py-6 text-center">
-                                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-400">
-                                        Saved This Month
-                                    </p>
-                                    <p className="mt-3 text-4xl font-semibold text-emerald-600">+€770</p>
-                                    </div>
-
-                                    <div className="flex flex-col items-center justify-center border-zinc-200 px-6 py-6 text-center">
-                                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-400">
-                                        Target
-                                    </p>
-                                    <p className="mt-3 text-4xl font-semibold text-zinc-800">€3,200 / €5,000</p>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <button className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-zinc-200 text-lg text-zinc-500 transition hover:border-zinc-300 hover:bg-zinc-50">
-                                →
-                                </button>
-                            </div>
-                            <div className="mt-6 flex items-center justify-center gap-2">
-                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-800"></span>
-                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-300"></span>
-                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-300"></span>
-                            <span className="h-2.5 w-2.5 rounded-full bg-zinc-300"></span>
-                            </div>
-                            </article>
+                            
+                             <SavingsGoalsCard /> 
 
                         </div>
                     </div>
@@ -155,7 +123,7 @@ export default function Dashboard () {
                             isOpen={openActions.income}
                             onToggle={() => toggleAction("income")}
                         >
-                            <p className="text-sm text-zinc-500">
+                            <p className="text-sm text-[#76638F]">
                             Expanded income form content will go here.
                             </p>
                         </QuickActionCard>
@@ -165,7 +133,7 @@ export default function Dashboard () {
                             isOpen={openActions.expense}
                             onToggle={() => toggleAction("expense")}
                         >
-                            <p className="text-sm text-zinc-500">
+                            <p className="text-sm text-[#76638F]">
                             Expanded expense form content will go here.
                             </p>
                         </QuickActionCard>
@@ -175,7 +143,7 @@ export default function Dashboard () {
                             isOpen={openActions.goal}
                             onToggle={() => toggleAction("goal")}
                         >
-                            <p className="text-sm text-zinc-500">
+                            <p className="text-sm text-[#76638F]">
                             Expanded goal form content will go here.
                             </p>
                         </QuickActionCard>
