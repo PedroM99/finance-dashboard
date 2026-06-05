@@ -1,18 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QuickActionCard from "../components/QuickActionCard";
 import SavingsGoalsCard from "../components/SavingsGoalsCard";
 import QuickActionForm from "../components/QuickActionForm";
+
+type Transaction = {
+  id: number;
+  type: "income" | "expense";
+  name: string;
+  amount: string;
+  date: string;
+  created_at: string;
+};
 
 
 
 export default function Dashboard () {
 
+        const [transactions, setTransactions] = useState<Transaction[]>([]);
+        const [isLoadingTransactions, setIsLoadingTransactions] = useState(true);
+        const [transactionsError, setTransactionsError] = useState("");
 
-    const [openActions, setOpenActions] = useState({
+        const [openActions, setOpenActions] = useState({
         income: false,
         expense: false,
         goal: false,
         });
+
+        async function fetchTransactions() {
+        try {
+            setIsLoadingTransactions(true);
+            setTransactionsError("");
+
+            const response = await fetch("http://localhost:3000/api/transactions");
+
+            if (!response.ok) {
+            throw new Error("Failed to fetch transactions.");
+            }
+
+            const data: Transaction[] = await response.json();
+
+            setTransactions(data);
+        } catch (error) {
+            console.error(error);
+            setTransactionsError("Could not load transactions.");
+        } finally {
+            setIsLoadingTransactions(false);
+        }
+        }
+
+        useEffect(() => {
+        fetchTransactions();
+        }, []);
+
+
+        const latestIncome = transactions.find(
+        (transaction) => transaction.type === "income"
+        );
+
+        const latestExpense = transactions.find(
+        (transaction) => transaction.type === "expense"
+        );
+
+
+        function formatCurrency(value: string | undefined) {
+        if (!value) return "€0.00";
+
+        return new Intl.NumberFormat("en-IE", {
+            style: "currency",
+            currency: "EUR",
+        }).format(Number(value));
+        }
 
         const toggleAction = (action: "income" | "expense" | "goal") => {
         setOpenActions((prev) => ({
@@ -57,16 +114,44 @@ export default function Dashboard () {
 
                         <div className="grid grid-cols-3 gap-5">
 
-                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer"> 
+                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
                             <p className="text-sm font-medium text-[#76638F]">Latest Income</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-emerald-600">+€2,950.00</h2>
-                            <p className="mt-2 text-sm text-zinc-800">Salary + freelance</p>
+
+                            <h2 className="mt-4 text-3xl font-semibold text-emerald-600">
+                                {isLoadingTransactions
+                                ? "Loading..."
+                                : latestIncome
+                                    ? `+${formatCurrency(latestIncome.amount)}`
+                                    : "€0.00"}
+                            </h2>
+
+                            <p className="mt-2 text-sm text-zinc-800">
+                                {transactionsError
+                                ? transactionsError
+                                : latestIncome
+                                    ? latestIncome.name
+                                    : "No income yet"}
+                            </p>
                             </article>
 
-                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer"> 
+                            <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
                             <p className="text-sm font-medium text-[#76638F]">Latest Expense</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-red-600">-€28.20</h2>
-                            <p className="mt-2 text-sm text-zinc-800">Uber Eats</p>
+
+                            <h2 className="mt-4 text-3xl font-semibold text-red-600">
+                                {isLoadingTransactions
+                                ? "Loading..."
+                                : latestExpense
+                                    ? `-${formatCurrency(latestExpense.amount)}`
+                                    : "€0.00"}
+                            </h2>
+
+                            <p className="mt-2 text-sm text-zinc-800">
+                                {transactionsError
+                                ? transactionsError
+                                : latestExpense
+                                    ? latestExpense.name
+                                    : "No expenses yet"}
+                            </p>
                             </article>
 
                             <article className="rounded-3xl bg-white p-6 shadow-sm hover:-translate-y-0.5 cursor-pointer">
@@ -124,7 +209,7 @@ export default function Dashboard () {
                             isOpen={openActions.income}
                             onToggle={() => toggleAction("income")}
                         >
-                            <QuickActionForm type="income" />
+                            <QuickActionForm type="income" onSuccess={fetchTransactions} />
                         </QuickActionCard>
 
                     <QuickActionCard
@@ -132,7 +217,7 @@ export default function Dashboard () {
                             isOpen={openActions.expense}
                             onToggle={() => toggleAction("expense")}
                         >
-                            <QuickActionForm type="expense" />
+                            <QuickActionForm type="expense" onSuccess={fetchTransactions} />
                         </QuickActionCard>
 
                     <QuickActionCard

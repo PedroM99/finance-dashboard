@@ -6,6 +6,7 @@ type QuickActionType = "income" | "expense" | "goal";
 
 type QuickActionFormProps = {
   type: QuickActionType;
+  onSuccess?: () => void;
 };
 
 const formContent = {
@@ -32,7 +33,9 @@ const formContent = {
   },
 };
 
-export default function QuickActionForm({ type }: QuickActionFormProps) {
+export default function QuickActionForm({ 
+  type, onSuccess, }: QuickActionFormProps) {
+
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
@@ -112,6 +115,7 @@ export default function QuickActionForm({ type }: QuickActionFormProps) {
       }
 
       setIsSuccess(true);
+      onSuccess?.();
 
       setName("");
       setAmount("");
