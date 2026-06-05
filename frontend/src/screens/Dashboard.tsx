@@ -1,6 +1,7 @@
 import { useState } from "react";
 import QuickActionCard from "../components/QuickActionCard";
 import SavingsGoalsCard from "../components/SavingsGoalsCard";
+import QuickActionForm from "../components/QuickActionForm";
 
 
 
@@ -123,9 +124,7 @@ export default function Dashboard () {
                             isOpen={openActions.income}
                             onToggle={() => toggleAction("income")}
                         >
-                            <p className="text-sm text-[#76638F]">
-                            Expanded income form content will go here.
-                            </p>
+                            <QuickActionForm type="income" />
                         </QuickActionCard>
 
                     <QuickActionCard
@@ -133,9 +132,7 @@ export default function Dashboard () {
                             isOpen={openActions.expense}
                             onToggle={() => toggleAction("expense")}
                         >
-                            <p className="text-sm text-[#76638F]">
-                            Expanded expense form content will go here.
-                            </p>
+                            <QuickActionForm type="expense" />
                         </QuickActionCard>
 
                     <QuickActionCard
@@ -143,9 +140,7 @@ export default function Dashboard () {
                             isOpen={openActions.goal}
                             onToggle={() => toggleAction("goal")}
                         >
-                            <p className="text-sm text-[#76638F]">
-                            Expanded goal form content will go here.
-                            </p>
+                            <QuickActionForm type="goal" />
                         </QuickActionCard>
                     </aside>
                 </section>
