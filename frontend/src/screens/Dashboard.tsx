@@ -12,6 +12,16 @@ type Transaction = {
   created_at: string;
 };
 
+type Goal = {
+  id: number;
+  title: string;
+  target_amount: string;
+  current_amount: string;
+  created_at: string;
+};
+
+
+
 
 
 export default function Dashboard () {
@@ -19,6 +29,10 @@ export default function Dashboard () {
         const [transactions, setTransactions] = useState<Transaction[]>([]);
         const [isLoadingTransactions, setIsLoadingTransactions] = useState(true);
         const [transactionsError, setTransactionsError] = useState("");
+
+        const [goals, setGoals] = useState<Goal[]>([]);
+        const [isLoadingGoals, setIsLoadingGoals] = useState(true);
+        const [goalsError, setGoalsError] = useState("");
 
         const [openActions, setOpenActions] = useState({
         income: false,
@@ -48,8 +62,32 @@ export default function Dashboard () {
         }
         }
 
+        async function fetchGoals() {
+        try {
+            setIsLoadingGoals(true);
+            setGoalsError("");
+
+            const response = await fetch("http://localhost:3000/api/goals");
+
+            if (!response.ok) {
+            throw new Error("Failed to fetch goals.");
+            }
+
+            const data: Goal[] = await response.json();
+
+            setGoals(data);
+        } catch (error) {
+            console.error(error);
+            setGoalsError("Could not load goals.");
+        } finally {
+            setIsLoadingGoals(false);
+        }
+        };
+
+
         useEffect(() => {
         fetchTransactions();
+        fetchGoals();
         }, []);
 
 
@@ -198,7 +236,11 @@ export default function Dashboard () {
                             </article>
 
                             
-                             <SavingsGoalsCard /> 
+                             <SavingsGoalsCard 
+                                goals={goals}
+                                isLoading={isLoadingGoals}
+                                error={goalsError}
+                            /> 
 
                         </div>
                     </div>
@@ -225,7 +267,7 @@ export default function Dashboard () {
                             isOpen={openActions.goal}
                             onToggle={() => toggleAction("goal")}
                         >
-                            <QuickActionForm type="goal" />
+                            <QuickActionForm type="goal" onSuccess={fetchGoals} />
                         </QuickActionCard>
                     </aside>
                 </section>

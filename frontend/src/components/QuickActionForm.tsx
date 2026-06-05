@@ -86,33 +86,40 @@ export default function QuickActionForm({
     setError("");
     setIsSubmitting(true);
 
-    const formData = {
-      type,
-      name: name.trim(),
-      amount: Number(amount),
-      date: isGoal ? null : date,
-    };
+    const requestUrl = isGoal
+      ? "http://localhost:3000/api/goals"
+      : "http://localhost:3000/api/transactions";
+
+    const requestBody = isGoal
+      ? {
+          title: name.trim(),
+          targetAmount: Number(amount),
+        }
+      : {
+          type,
+          name: name.trim(),
+          amount: Number(amount),
+          date,
+        };
 
     try {
-      if (isGoal) {
-        console.log("Goal submitted:", formData);
-      } else {
-        const response = await fetch("http://localhost:3000/api/transactions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+      const response = await fetch(requestUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-        if (!response.ok) {
-          throw new Error("Failed to save transaction.");
-        }
-
-        const savedTransaction = await response.json();
-
-        console.log("Transaction saved:", savedTransaction);
+      if (!response.ok) {
+        throw new Error(
+          isGoal ? "Failed to create goal." : "Failed to save transaction."
+        );
       }
+
+      const savedItem = await response.json();
+
+      console.log(isGoal ? "Goal saved:" : "Transaction saved:", savedItem);
 
       setIsSuccess(true);
       onSuccess?.();

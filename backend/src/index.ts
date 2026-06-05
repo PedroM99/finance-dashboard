@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { db } from "./db.js";
 import transactionsRouter from "./routes/transactions.js";
+import goalsRouter from "./routes/goals.js";
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.get("/api/db-health", async (_req, res) => {
 
 
 app.use("/api/transactions", transactionsRouter);
+app.use("/api/goals", goalsRouter);
 
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);
