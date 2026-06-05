@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { db } from "./db.js";
+import transactionsRouter from "./routes/transactions.js";
 
 dotenv.config();
 
@@ -35,6 +36,9 @@ app.get("/api/db-health", async (_req, res) => {
     });
   }
 });
+
+
+app.use("/api/transactions", transactionsRouter);
 
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);

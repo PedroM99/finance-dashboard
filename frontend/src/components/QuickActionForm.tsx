@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef,  type SyntheticEvent  } from "react";
 import { Calendar, Check } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -38,6 +38,7 @@ export default function QuickActionForm({ type }: QuickActionFormProps) {
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [error, setError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dateInputRef = useRef<HTMLInputElement>(null);
 
@@ -60,42 +61,80 @@ export default function QuickActionForm({ type }: QuickActionFormProps) {
     }
   }
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!name.trim()) {
-        setError(isGoal ? "Please enter a goal name." : "Please enter a source or category.");
-        setIsSuccess(false);
-        return;
+      setError(
+        isGoal
+          ? "Please enter a goal name."
+          : "Please enter a source or category."
+      );
+      setIsSuccess(false);
+      return;
     }
 
     if (!amount || Number(amount) <= 0) {
-        setError("Please enter a valid amount.");
-        setIsSuccess(false);
-        return;
+      setError("Please enter a valid amount.");
+      setIsSuccess(false);
+      return;
     }
 
     setError("");
+    setIsSubmitting(true);
 
     const formData = {
-        type,
-        name,
-        amount: Number(amount),
-        date: isGoal ? null : date,
+      type,
+      name: name.trim(),
+      amount: Number(amount),
+      date: isGoal ? null : date,
     };
 
-    console.log("Quick action submitted:", formData);
+    try {
+      if (isGoal) {
+        console.log("Goal submitted:", formData);
+      } else {
+        const response = await fetch("http://localhost:3000/api/transactions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
-    setIsSuccess(true);
+        if (!response.ok) {
+          throw new Error("Failed to save transaction.");
+        }
 
-    setName("");
-    setAmount("");
-    setDate(new Date().toISOString().slice(0, 10));
+        const savedTransaction = await response.json();
 
-    window.setTimeout(() => {
-    setIsSuccess(false);
-    }, 1800);
+        console.log("Transaction saved:", savedTransaction);
+      }
+
+      setIsSuccess(true);
+
+      setName("");
+      setAmount("");
+      setDate(new Date().toISOString().slice(0, 10));
+
+      window.setTimeout(() => {
+        setIsSuccess(false);
+      }, 1800);
+    } catch (error) {
+      console.error(error);
+
+      setError(
+        isGoal
+          ? "Something went wrong while creating the goal."
+          : "Something went wrong while saving the transaction."
+      );
+
+      setIsSuccess(false);
     }
+    finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -164,13 +203,15 @@ export default function QuickActionForm({ type }: QuickActionFormProps) {
 
         <motion.button
         type="submit"
+        disabled={isSubmitting}
         animate={{
             backgroundColor: isSuccess ? "#ecfdf5" : "#f7f3eb",
             borderColor: isSuccess ? "#a7f3d0" : "#ebe4f3",
             color: isSuccess ? "#059669" : "#76638F",
+            opacity: isSubmitting ? 0.7 : 1,
         }}
         transition={{ duration: 0.25 }}
-        className="mt-2 flex w-full cursor-pointer items-center justify-center rounded-xl border px-3 py-2.5 text-sm font-semibold outline-none transition hover:bg-[#fcfaf6] hover:text-zinc-800"
+        className="mt-2 flex w-full cursor-pointer items-center justify-center rounded-xl border px-3 py-2.5 text-sm font-semibold outline-none transition hover:bg-[#fcfaf6] hover:text-zinc-800 disabled:cursor-not-allowed"
         >
         <AnimatePresence mode="wait" initial={false}>
             {isSuccess ? (
@@ -184,6 +225,17 @@ export default function QuickActionForm({ type }: QuickActionFormProps) {
             >
                 <Check size={16} strokeWidth={2.5} />
                 {content.successText}
+            </motion.span>
+
+            ) : isSubmitting ? (
+              <motion.span
+                key="submitting"
+                initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+            >
+                Saving...
             </motion.span>
             ) : (
             <motion.span
